@@ -15,20 +15,35 @@ int isFull(Queue *q) {
     return (q->rear + 1) % MAX_QUEUE == q->front;
 }
 
-void addQueue(Queue *q, Nasabah n) {
-    if (isFull(q)) {
+
+void addQueue(Queue *q, Nasabah n)
+{
+    if (isFull(q))
+    {
         printf("Error: Antrian penuh! Tidak dapat menambahkan nasabah '%s'.\n", n.nama_nasabah);
         return;
     }
-    if (isEmpty(q)) {
+
+    // Validasi jenis layanan
+    while (strcmp(n.jenis_layanan, "setoran") != 0 && strcmp(n.jenis_layanan, "penarikan") != 0)
+    {
+        printf("Jenis layanan salah! Masukkan hanya 'setoran' atau 'penarikan': ");
+        scanf("%s", n.jenis_layanan);
+    }
+
+    if (isEmpty(q))
+    {
         q->front = 0;
         q->rear = 0;
-    } else {
+    }
+    else
+    {
         q->rear = (q->rear + 1) % MAX_QUEUE;
     }
     q->data[q->rear] = n;
     printf("Nasabah '%s' berhasil ditambahkan ke antrian dengan nomor %d.\n", n.nama_nasabah, n.nomor_antrian);
 }
+
 
 void delQueue(Queue *q) {
     if (isEmpty(q)) {
